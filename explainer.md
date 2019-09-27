@@ -59,6 +59,12 @@ cross-origin cookies have broken these flows.
 
 ### Pop-Ups
 
+When a user switches tabs or clicks on the browser window for any reason,
+the popup would be hidden behind the browsing window.
+
+If the user is using the popups for payment apps in comparison shopping scenario,
+it is difficult to keep track of which popup belongs to which tab.
+
 Pop-ups are generally locked down and difficult to invoke reliably due to the
 measures introduced by browsers to counter their abuse.
 
@@ -116,6 +122,9 @@ https://msdn.microsoft.com/en-us/ie/ms536759(v=vs.94)
 
 For some details of the history behind `window.showModalDialogue(...)` see
 [“Removing showModalDialog from the Web Platform”](https://dev.opera.com/blog/showmodaldialog/)
+
+The `showModalDialog()` API blocked execution of JavaScript in the parent window,
+similar to `alert()`. This proposal does not intend to do that.
 
 This proposal should address the security concerns raised with the previous
 `window.showModalDialogue(...)` implementation which appear to be primarily
