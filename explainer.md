@@ -144,7 +144,8 @@ Is only interactive when it becomes the top level context.
 ### Opener context (Window or Worker)
 
 ```javascript
-const modalWindow = await window.openModal('https://authorization-server.com/auth?response_type=code&scope=photos&state=1234zyx');
+const modalWindow = await window.openModal(
+    'https://authorization-server.com/auth?response_type=code&scope=photos&state=1234zyx');
 // modalWindow is an instance of Window (https://developer.mozilla.org/en-US/docs/Web/API/Window)
 window.addEventListener('message', (e) => {
   // Check origin
