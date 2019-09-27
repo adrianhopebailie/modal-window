@@ -179,60 +179,60 @@ window.parent.postMessage('some message', '*');
 
 1. What information might this feature expose to Web sites or other parties, and for what purposes is that exposure necessary?
 
-None
+> None
 
 2. Is this specification exposing the minimum amount of information necessary to power the feature?
 
-Yes
+> Yes
 
-2.3. How does this specification deal with personal information or personally-identifiable information or information derived thereof?
+3. How does this specification deal with personal information or personally-identifiable information or information derived thereof?
 
-Not Applicable
+> Not Applicable
 
-2.4. How does this specification deal with sensitive information?
+4. How does this specification deal with sensitive information?
 
-Not Applicable
+> Not Applicable
 
-2.5. Does this specification introduce new state for an origin that persists across browsing sessions?
+5. Does this specification introduce new state for an origin that persists across browsing sessions?
 
-No
+> No
 
-2.6. What information from the underlying platform, e.g. configuration data, is exposed by this specification to an origin?
+6. What information from the underlying platform, e.g. configuration data, is exposed by this specification to an origin?
 
-None
+> None
 
-2.7. Does this specification allow an origin access to sensors on a user’s device
+7. Does this specification allow an origin access to sensors on a user’s device
 
-No
+> No
 
-2.8. What data does this specification expose to an origin? 
+8. What data does this specification expose to an origin? 
 
-This feature is identical in this respect to `window.open`
+> This feature is identical in this respect to `window.open`
 
-2.9. Does this specification enable new script execution/loading mechanisms?
+9. Does this specification enable new script execution/loading mechanisms?
 
-No
+> No
 
-2.10. Does this specification allow an origin to access other devices?
+10. Does this specification allow an origin to access other devices?
 
-No
+> No
 
-2.11. Does this specification allow an origin some measure of control over a user agent’s native UI?
+11. Does this specification allow an origin some measure of control over a user agent’s native UI?
 
-Yes, to some degree. It allows a website to create a new modal window context which makes the calling context inaccessible until the modal is closed. To mitigate abuse of this capability it is recommended that only a single modal can be open per parent context.
+> Yes, to some degree. It allows a website to create a new modal window context which makes the calling context inaccessible until the modal is closed. To mitigate abuse of this capability it is recommended that only a single modal can be open per parent context.
 
-2.13. How does this specification distinguish between behavior in first-party and third-party contexts?
+13. How does this specification distinguish between behavior in first-party and third-party contexts?
 
-THis feature should only be available to third-party contexts if it is explicitly allowed by the first-party (e.g. through feature policy)
+> This feature should only be available to third-party contexts if it is explicitly allowed by the first-party (e.g. through feature policy)
 
-2.14. How does this specification work in the context of a user agent’s Private Browsing or "incognito" mode?
+14. How does this specification work in the context of a user agent’s Private Browsing or "incognito" mode?
 
-The behaviour should be no different. The new context that is created will also be in "incognito" mode if the opener is
+> The behaviour should be no different. The new context that is created will also be in "incognito" mode if the opener is
 
-2.15. Does this specification have a "Security Considerations" and "Privacy Considerations" section?
+15. Does this specification have a "Security Considerations" and "Privacy Considerations" section?
 
-Not yet in this explainer. One will be included with in the final spec.
+> Not yet in this explainer. One will be included with in the final spec.
 
-2.16. Does this specification allow downgrading default security characteristics?
+16. Does this specification allow downgrading default security characteristics?
 
-No
+> No
