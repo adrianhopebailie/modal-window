@@ -141,17 +141,36 @@ Is only interactive when it becomes the top level context.
 
 ## Example API Usage
 
-### Opener context
+### Opener context (Window or Worker)
 
 ```javascript
-const modalWindow = await window.openModal(“confirm.html”);
+const modalWindow = await window.openModal('https://authorization-server.com/auth?response_type=code&scope=photos&state=1234zyx');
 // modalWindow is an instance of Window (https://developer.mozilla.org/en-US/docs/Web/API/Window)
-
-// TODO: Messaging the modal window.
+window.addEventListener('message', (e) => {
+  // Check origin
+  if ( e.origin === 'https://authorization-server.com' ) {
+      // Retrieve data sent in postMessage
+      const data = e.data;
+      // Send reply to source of message
+      e.source.postMessage('some reply', e.origin);
+  }
+}, false);
+modalWindow.postMessage('some message', 'https://authorization-server.com');
 ```
 
 ### Modal Window Context
 
 ```javascript
-// TODO: Messaging the opener context.
+window.addEventListener('message', (e) => {
+  // Check parent origin is for a valid client
+  const client = getClientFromOrigin(e.origin)
+  if ( client ) {
+      // Retrieve data sent in postMessage
+      const data = e.data;
+      // Send reply to source of message
+      e.source.postMessage('some reply', e.origin);
+  }
+}, false);
+
+window.parent.postMessage('some message', '*');
 ```
