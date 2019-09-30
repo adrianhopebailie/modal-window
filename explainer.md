@@ -10,7 +10,6 @@ Contributors:
 - Rouslan Solomakhin (Google)
 - Junkee Song (Microsoft)
 - Sam Goto (Google)
-- Danyao Wang (Google)
 
 In order to perform certain functions that involve interactions with a
 third-party such as authentication, sharing, and payments, we require either
