@@ -221,7 +221,7 @@ window.parent.postMessage('some message', '*');
 
 9. Does this specification enable new script execution/loading mechanisms?
 
-> No
+> Yes, the specification enables opening a new top level context, similar to a popup.
 
 10. Does this specification allow an origin to access other devices?
 
