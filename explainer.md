@@ -122,7 +122,7 @@ Initially identified requirements for such a UI component are:
     channel (i.e., some means to post or stream messages back and forth).
 7.  Both the opener context and the browsing context must have the ability to
     close the browsing context.
-8.  Both the opener and the browsing context must be only be available in a secure context.
+8.  Both the opener and the browsing context must only be available in a secure context.
 9.  Only the origin indicated by the opener context should have the ability to
     message back to the opener context.
 10. The API might need an ability to indicate the kind of service that's needed
