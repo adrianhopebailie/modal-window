@@ -130,6 +130,8 @@ Initially identified requirements for such a UI component are:
     since the current implementations don’t do anything use-case specific from a
     UX perspective, there’s no product need for this feature yet.
 11. only triggered by user activation. 
+12. modal window uses a separate browsing context group, which precludes synchronous DOM access, named access to each others' browsing context, etc.
+13. Only a slim interface with `postMessage()` can be used to communicate between the opener and the modal window.
 
 ## Existing Web Platform solutions 
 
@@ -201,7 +203,24 @@ window.addEventListener('message', (e) => {
   }
 }, false);
 
-window.parent.postMessage('some message', '*');
+window.modalParent.postMessage('some message', '*');
+```
+
+### WebIDL
+```webidl
+interface ModalHost : EventTarget {
+  void postMessage(any message, DOMString targetOrigin, optional sequence<object> transfer = []);
+  void postMessage(any message, optional WindowPostMessageOptions options);
+  
+  attribute EventHandler onmessage;
+  attribute EventHandler onmessageerror;
+};
+
+interface Window {
+  Promise<ModalHost> openModal(DOMString url);
+  attribute ModalHost modalParent;
+};
+
 ```
 
 ## Security Self-Assessment
