@@ -284,3 +284,7 @@ Not yet in this explainer. One will be included with in the final spec.
 > 16. Does this specification allow downgrading default security characteristics?
 
 No
+
+## TAG Review
+
+[Requested on 28 September](https://github.com/w3ctag/design-reviews/issues/427)
