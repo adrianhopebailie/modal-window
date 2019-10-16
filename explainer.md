@@ -288,3 +288,7 @@ No
 ## TAG Review
 
 [Requested on 28 September](https://github.com/w3ctag/design-reviews/issues/427)
+
+## WICG
+
+[Posted on 16 October](https://discourse.wicg.io/t/proposal-modal-window/3982)
