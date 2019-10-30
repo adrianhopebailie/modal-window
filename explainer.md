@@ -1,16 +1,4 @@
 # Explainer
-
-Authors:
-
-- Adrian Hope-Bailie (Coil)
-- Marcos Caceres (Mozilla)
-
-Contributors:
-
-- Rouslan Solomakhin (Google)
-- Junkee Song (Microsoft)
-- Sam Goto (Google)
-
 In order to perform certain functions that involve interactions with a
 third-party such as authentication, sharing, and payments, browsers rely on
 pop-ups, opening a new tab, performing a redirect, or similar. 
@@ -292,3 +280,13 @@ No
 ## WICG
 
 [Posted on 16 October](https://discourse.wicg.io/t/proposal-modal-window/3982)
+
+## Acknowledgements
+
+Contributors:
+
+- Adrian Hope-Bailie (Coil)
+- Rouslan Solomakhin (Google)
+- Junkee Song (Microsoft)
+- Sam Goto (Google)
+- Marcos Caceres (Mozilla)
