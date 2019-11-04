@@ -3,6 +3,8 @@ In order to perform certain functions that involve interactions with a
 third-party such as authentication, sharing, and payments, browsers rely opening
 a new tab, performing a redirect, or similar. 
 
+![Screen Shot 2019-11-04 at 1 34 56 pm](https://user-images.githubusercontent.com/870154/68096891-e72f4700-ff07-11e9-9fa0-a068bdd80a3d.png)
+
 From a UX perspective, although they work, these experiences are often suboptimal 
 to those provided by native applications: where authentication flows or payment flows
 are more cohesively integrated into the user experience either via native UI componets
@@ -16,10 +18,22 @@ invocation of a payment handler (third-party service) that may be either a nativ
 (e.g. ApplePay from Safari) or a worker from an origin different to the calling
 context.
 
-This necessitated the introduction of a new UI component that allows the
-worker to display UI to the user in the form of a modal window with the privileges of a top-level
-browsing context.
+This necessitated the introduction of: 
+1. a means for web applications to indicate what actions they can "handle", beyond being just a regular (installable) website.   
+1. Possibly a new browser-level UI components that allow a user to select which web application they would like to handle a particular action. 
+1. Being able to present the selected web application with the privileges of a top-level browsing context, and possibly giving access to a predefined set of powerful features.
 
+## Problem
+Many use cases (authentication, payment, share, etc) require invocation of a
+third-party service from another origin that requires a distinct user interface.
+
+For example, sharing a URL with the notes application in MacOS:
+
+![Sharing with notes](https://user-images.githubusercontent.com/870154/68001106-c3c18d80-fcb6-11e9-894f-5ad99c43166b.png)
+
+## Solutions Considered
+
+### Payment handler API
 The current solution (implemented in Chrome) defines a platform feature
 (`PaymentRequestEvent.prototype.openWindow()`) that is only available inside the context of
 a Payment Request.
@@ -36,18 +50,26 @@ https://rsolomakhin.github.io/pr/apps/password/
 
 ![Payment handler going beyond handling payment](https://user-images.githubusercontent.com/870154/68000787-8b6d7f80-fcb5-11e9-8eae-04c4b3c8eab0.png)
 
-## Problem
+### Web Share Target
+The [Web Share Target](https://wicg.github.io/web-share-target/) specification allows a web application to declare itself as capable of handling "shares". This is achieved via web manfiest:
 
-Many use cases (authentication, payment, share, etc) require invocation of a
-third-party service from another origin that requires a distinct user interface.
+```JSON
+{
+  "name": "Includinator",
+  "share_target": {
+    "action": "share.html",
+    "params": {
+      "title": "name",
+      "text": "description",
+      "url": "link"
+    }
+  }
+}
+```
 
-For example, sharing a URL with the notes application in MacOS:
+When the user installs the Web Application, the website becomes a "target" for sharing resources from one website to another. 
 
-![Sharing with notes](https://user-images.githubusercontent.com/870154/68001106-c3c18d80-fcb6-11e9-894f-5ad99c43166b.png)
-
-## Solutions Considered
-
-### IFrames
+### iframes
 
 Many third-party services require a top-level browsing context, often for security
 reasons. As a minimum security requirement, the origin of the third-party should
@@ -88,39 +110,31 @@ calling origin also loses control of the context so an error in the third-party
 service can mean the user never returns... or returns to the wrong place 
 or the state or scroll position is lost (leading to a loss of context for the end-user).
 
-## Goals
+## Requirements
 
 Provide a mechanism for websites to display a top-level browsing context 
 that allows for short-lived cross-origin interactions.
 
-Initially identified requirements for such a UI component are:
+Initially identified requirements:
 
+1.  allows sites to indicate what they "handle".
 1.  acts as a top-level browsing context that displays third party content.
-2.  it's modal.
-3.  the abilty to position this browsing context at least relative to
+1.  the abilty to position this browsing context at least relative to
     the top or bottom of the container window, and perhaps have the ability to
     visually expand/contract the context (or let the user expand it) - and the ability to
     go fullscreen. The browsing context (not the opener) controls the
     dimensions.
-4.  the opener context needs to set the feature policy (e.g., allow web authn,
-    camera access, credential management). 
-5.  the modal window API itself will be disabled in cross-origin iframes by
-    default, except when explicitly enabled with feature policy, e.g.,
-    allow=”modal-window”.
-6.  the opener context must have a means to have a bi-directional communication
+1.  Some means to limit what power features the context has access to (e.g., via feature policy). 
+1.  disabled by default, except when explicitly enabled by the end-user.
+1.  the opener context must have a means to have a bi-directional communication
     channel (i.e., some means to post or stream messages back and forth).
-7.  Both the opener context and the browsing context must have the ability to
-    close the browsing context.
-8.  Both the opener and the browsing context must only be available in a secure context.
-9.  Only the origin indicated by the opener context should have the ability to
+1.  the ability to close the browsing context (user controlled? programmatically controlled?).
+1.  Only be available in a secure context.
+1.  Only the origin indicated by the opener context should have the ability to
     message back to the opener context.
-10. The API might need an ability to indicate the kind of service that's needed
-    (e.g., "payment", "authentication", "share", "mixed?") in the future, but
-    since the current implementations don’t do anything use-case specific from a
-    UX perspective, there’s no product need for this feature yet.
-11. only triggered by user activation. 
-12. modal window uses a separate browsing context group, which precludes synchronous DOM access, named access to each others' browsing context, etc.
-13. Only a slim interface with `postMessage()` can be used to communicate between the opener and the modal window.
+1.  The ability to indicate the kind of service that's needed (e.g., "payment", "authentication", "share", "mixed?") - this may already by implied by an API call. 
+1. only triggered by user activation. 
+1. uses a separate browsing context group, which precludes synchronous DOM access, named access to each others' browsing context, etc.
 
 ## Existing Web Platform solutions 
 
