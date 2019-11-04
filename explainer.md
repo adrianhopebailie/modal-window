@@ -1,16 +1,15 @@
 # Explainer
 In order to perform certain functions that involve interactions with a
-third-party such as authentication, sharing, and payments, browsers rely on
-pop-ups, opening a new tab, performing a redirect, or similar. 
+third-party such as authentication, sharing, and payments, browsers rely opening
+a new tab, performing a redirect, or similar. 
 
 From a UX perspective, although they work, these experiences are often suboptimal 
 to those provided by native applications: where authentication flows or payment flows
 are more cohesively integrated into the user experience either via native UI componets
 or some kind of "webview".  
 
-<!-- TODO: Add some videos or screenshots here of how nicely native apps handle this.
- Showing Apple Pay via Messages app on iOS would be nice here... so awesome. 
--->
+![embedded applications](https://img.youtube.com/vi/yvStdEd_oCw/hqdefault.jpg)
+https://youtu.be/yvStdEd_oCw
 
 The Web Payments WG defined an API for requesting payments resulting in the
 invocation of a payment handler (third-party service) that may be either a native app
@@ -25,7 +24,8 @@ The current solution (implemented in Chrome) defines a platform feature
 (`PaymentRequestEvent.prototype.openWindow()`) that is only available inside the context of
 a Payment Request.
 
-<!-- TODO: nice screenshot or animation of the payment sheet would be nice here --> 
+![payment handler](https://img.youtube.com/vi/IK_SlT6zm4I/hqdefault.jpg)
+https://www.youtube.com/watch?5=&v=IK_SlT6zm4I
 
 However, the presented UI component could be useful for other use cases (e.g. authentication,
 sharing, access to third-party services) and an innovative use of the payment
@@ -34,15 +34,16 @@ demo:
 
 https://rsolomakhin.github.io/pr/apps/password/
 
-<!-- we probably want a video or something here of the password --> 
-
+![Payment handler going beyond handling payment](https://user-images.githubusercontent.com/870154/68000787-8b6d7f80-fcb5-11e9-8eae-04c4b3c8eab0.png)
 
 ## Problem
 
 Many use cases (authentication, payment, share, etc) require invocation of a
-third-party service from another origin that requires a user interface.
+third-party service from another origin that requires a distinct user interface.
 
-<!-- Could show what Mac OS does with native share... in particular, how each share handler allows different data and requires slightly different UI -->
+For example, sharing a URL with the notes application in MacOS:
+
+![Sharing with notes](https://user-images.githubusercontent.com/870154/68001106-c3c18d80-fcb6-11e9-894f-5ad99c43166b.png)
 
 ## Solutions Considered
 
@@ -60,7 +61,7 @@ Many services have used iframes in the past to improve, for example, third-party
 login flows such as single-sign-on. However, because of pervasive user tracking, 
 recent changes in many browser to restrict cross-origin cookies have broken these flows.
 
-### Pop-Ups
+### Pop-Ups/new tabs
 
 When a user switches tabs or clicks on the browser window for any reason,
 the popup would be hidden behind the browsing window. On mobile devices, 
@@ -156,60 +157,6 @@ See https://web.dev/hands-on-portals
 #### Difference from current proposal:
 
 Is only interactive when it becomes the top-level browsing context.
-
-## Example API Usage
-
-### Opener context (Window or Worker)
-
-```javascript
-const modalWindow = await window.openModal(
-    'https://authorization-server.com/auth?response_type=code&scope=photos&state=1234zyx');
-// modalWindow is an instance of Window (https://developer.mozilla.org/en-US/docs/Web/API/Window)
-window.addEventListener('message', (e) => {
-  // Check origin
-  if ( e.origin === 'https://authorization-server.com' ) {
-      // Retrieve data sent in postMessage
-      const data = e.data;
-      // Send reply to source of message
-      e.source.postMessage('some reply', e.origin);
-  }
-}, false);
-modalWindow.postMessage('some message', 'https://authorization-server.com');
-```
-
-### Modal Window Context
-
-```javascript
-window.addEventListener('message', (e) => {
-  // Check parent origin is for a valid client
-  const client = getClientFromOrigin(e.origin)
-  if ( client ) {
-      // Retrieve data sent in postMessage
-      const data = e.data;
-      // Send reply to source of message
-      e.source.postMessage('some reply', e.origin);
-  }
-}, false);
-
-window.modalParent.postMessage('some message', '*');
-```
-
-### WebIDL
-```webidl
-interface ModalHost : EventTarget {
-  void postMessage(any message, DOMString targetOrigin, optional sequence<object> transfer = []);
-  void postMessage(any message, optional WindowPostMessageOptions options);
-  
-  attribute EventHandler onmessage;
-  attribute EventHandler onmessageerror;
-};
-
-interface Window {
-  Promise<ModalHost> openModal(DOMString url);
-  attribute ModalHost modalParent;
-};
-
-```
 
 ## Security Self-Assessment
 
