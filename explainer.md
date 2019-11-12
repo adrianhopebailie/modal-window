@@ -172,6 +172,11 @@ See https://web.dev/hands-on-portals
 
 Is only interactive when it becomes the top-level browsing context.
 
+### Other similar attempts to solve this problem 
+
+ * [Web Intents](https://github.com/PaulKinlan/WebIntents)
+ * [Web Activities](https://wiki.mozilla.org/WebAPI/WebActivities)
+
 ## Security Self-Assessment
 
 > 1. What information might this feature expose to Web sites or other parties, and for what purposes is that exposure necessary?
