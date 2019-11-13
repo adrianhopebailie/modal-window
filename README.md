@@ -1,6 +1,4 @@
-# Modal Window
+# Handlers
+This repository captures general requirements for "handlers" for the Web. These are web applications that are able to handle one or more actions (intents?) in coordination with the end user. 
 
-A proposed Web API to invoke a modal window dialogue.
-
-This is the repository for Modal Window. You're welcome to
-[[contribute]](CONTRIBUTING.md).
+You're welcome to [contribute](CONTRIBUTING.md).
