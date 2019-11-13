@@ -119,22 +119,26 @@ Initially identified requirements:
 
 1.  allows sites to indicate what they "handle".
 1.  acts as a top-level browsing context that displays third party content.
-1.  the abilty to position this browsing context at least relative to
-    the top or bottom of the container window, and perhaps have the ability to
-    visually expand/contract the context (or let the user expand it) - and the ability to
-    go fullscreen. The browsing context (not the opener) controls the
-    dimensions.
+1.  the ability for the UA to position the new browsing context at least relative 
+    to the top or bottom of the container window, and perhaps have the ability to visually 
+    expand/contract the context (or let the user expand it) - and the ability to go 
+    fullscreen. This allows the UA to define a UX that clearly distinguishes modal windows
+    from anything a calling window could render in an attempt to trick the user into 
+    believing they are interacting with a new context. The UA (not the opener) controls 
+    the dimensions and position.
 1.  Some means to limit what power features the context has access to (e.g., via feature policy). 
 1.  disabled by default, except when explicitly enabled by the end-user.
 1.  the opener context must have a means to have a bi-directional communication
     channel (i.e., some means to post or stream messages back and forth).
 1.  the ability to close the browsing context (user controlled? programmatically controlled?).
-1.  Only be available in a secure context.
-1.  Only the origin indicated by the opener context should have the ability to
+1.  only be available in a secure context.
+1.  only the origin indicated by the opener context should have the ability to
     message back to the opener context.
-1.  The ability to indicate the kind of service that's needed (e.g., "payment", "authentication", "share", "mixed?") - this may already by implied by an API call. 
-1. only triggered by user activation. 
-1. uses a separate browsing context group, which precludes synchronous DOM access, named access to each others' browsing context, etc.
+1.  the ability to indicate the kind of service that's needed (e.g., "payment", "authentication", 
+    "share", "mixed?") - this may already by implied by an API call. 
+1.  only triggered by user activation. 
+1.  uses a separate browsing context group, which precludes synchronous DOM access, named access 
+    to each others' browsing context, etc.
 
 ## Existing Web Platform solutions 
 
