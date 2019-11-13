@@ -97,11 +97,13 @@ Initially identified requirements for such a UI component are:
 
 1.  acts as a top-level browsing context that displays third party content.
 2.  it's modal.
-3.  the abilty to position this browsing context at least relative to
-    the top or bottom of the container window, and perhaps have the ability to
-    visually expand/contract the context (or let the user expand it) - and the ability to
-    go fullscreen. The browsing context (not the opener) controls the
-    dimensions.
+3.  the ability for the UA to position the new browsing context at least relative 
+    to the top or bottom of the container window, and perhaps have the ability to visually 
+    expand/contract the context (or let the user expand it) - and the ability to go 
+    fullscreen. This allows the UA to define a UX that clearly distinguishes modal windows
+    from anything a calling window could render in an attempt to trick the user into 
+    believing they are interacting with a new context. The UA (not the opener) controls 
+    the dimensions and position.
 4.  the opener context needs to set the feature policy (e.g., allow web authn,
     camera access, credential management). 
 5.  the modal window API itself will be disabled in cross-origin iframes by
@@ -119,7 +121,8 @@ Initially identified requirements for such a UI component are:
     since the current implementations don’t do anything use-case specific from a
     UX perspective, there’s no product need for this feature yet.
 11. only triggered by user activation. 
-12. modal window uses a separate browsing context group, which precludes synchronous DOM access, named access to each others' browsing context, etc.
+12. modal window uses a separate browsing context group, which precludes synchronous 
+    DOM access, named access to each others' browsing context, etc.
 13. Only a slim interface with `postMessage()` can be used to communicate between the opener and the modal window.
 
 ## Existing Web Platform solutions 
